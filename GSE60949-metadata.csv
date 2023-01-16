@@ -1,0 +1,5 @@
+geo_accession,Sample,cell_line,treatment,condition
+GSM1494412,shGFP-3,A673,shGFP,tumor
+GSM1494416,shEWS-FLI2,A673,shEWS-FLI,normal
+GSM1494413,shGFP-1,A673,shGFP,tumor
+GSM1494415,shEWS-FLI1,A673,shEWS-FLI,normal
