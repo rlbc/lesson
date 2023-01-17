@@ -1,0 +1,610 @@
+---
+title: "Bioinformatics with R"
+output: html_document
+date: "2023-01-13"
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## What is R?
+
+The common misconception is that R is a  but in fact it is much more than that.
+Think of R is a programming language and an environment for statistical
+computing and graphics, which brings together a number of features to provide
+powerful functionality.
+
+The R environment combines:
+* effective handling of big data
+* collection of integrated tools
+* graphical facilities
+* simple and effective programming language
+
+## Why use R?
+
+R is a powerful, extensible environment. It has a wide range of statistics and
+general data analysis and visualization capabilities.
+
+* Data handling, wrangling, and storage
+* Wide array of statistical methods and graphical techniques available
+* Easy to install on any platform and use (and it’s free!)
+* Open source with a large and growing community of peers
+
+## What is RStudio (Posit)
+
+*RStudio is now called Posit*
+
+RStudio is freely available open-source Integrated Development Environment
+(IDE). RStudio provides an environment with many features to make using R easier
+and is a great alternative to working on R in the terminal.
+
+* Graphical user interface, not just a command prompt
+* Great learning tool
+* Free for academic use
+* Platform agnostic
+* Open source
+
+## RStudio interface
+
+The RStudio interface has four main panels:
+
+1. **Console**: where you can type commands and see output. The console is all
+you would see if you ran R in the command line without RStudio.
+2. **Script editor**: where you can type out commands and save to file. You can 
+also submit the commands to run in the console.
+3. *Environment/History**: environment shows all active objects and history 
+keeps track of all commands run in console.
+4. *Files/Plots/Packages/Help**
+
+## Interacting with R
+
+There are **two main ways** of interacting with R in RStudio: using the
+**console** or by using **script editor** (plain text files that contain your
+code).
+
+### Console window
+The **console window** (in RStudio, the bottom left panel) is the place where R
+is waiting for you to tell it what to do, and where it will show the results of
+a command.  You can type commands directly into the console, but they will be
+forgotten when you close the session.
+
+Let's test it out:
+
+```{r}
+3 + 5
+```
+
+### Script editor
+
+Best practice is to enter the commands in the **script editor**, and save the
+script. You are encouraged to comment liberally to describe the commands you are
+running using `#`. This way, you have a complete record of what you did, you can
+easily show others how you did it and you can do it again later on if needed.
+
+The Rstudio script editor allows you to 'send' the current line or the currently
+highlighted text to the R console by clicking on the `Run` button in the
+upper-right hand corner of the script editor. Alternatively, you can run by
+simply pressing the `Ctrl` and `Enter` keys at the same time as a shortcut.
+
+Now let's try entering commands to the **script editor** and using the comments
+character `#` to add descriptions and highlighting the text to run:
+
+```{r}
+# Intro to R Lesson
+# Feb 16th, 2016
+
+# Interacting with R
+	
+## I am adding 3 and 5. R is fun!
+3+5
+```
+
+## The R syntax
+
+Now that we know how to talk with R via the script editor or the console, we
+want to use R for something more than adding numbers. To do this, we need to
+know more about the R syntax.
+
+The main "parts of speech" in R (syntax) include:
+
+- the **comments** `#` and how they are used to document function and its content
+- **variables** and **functions**
+- the **assignment operator** `<-`
+- the `=` for **arguments** in functions
+
+We will go through each of these "parts of speech" in more detail, starting with
+the assignment operator.
+
+## Assignment operator
+
+To do useful and interesting things in R, we need to assign _values_ to
+_variables_ using the assignment operator, `<-`.  For example, we can use the
+assignment operator to assign the value of `3` to `x` by executing:
+
+```{r}
+x <- 3
+```
+
+The assignment operator (`<-`) assigns **values on the right** to **variables on
+the left**.
+
+*In RStudio, typing `Alt + -` (push `Alt` at the same time as the `-` key, on Mac
+type `option + -`) will write ` <- ` in a single keystroke.*
+
+## Variables
+
+A variable is a symbolic name for (or reference to) information. Variables in
+computer programming are analogous to "buckets", where information can be
+maintained and referenced. On the outside of the bucket is a name. When
+referring to the bucket, we use the name of the bucket, not the data stored in
+the bucket.
+
+In the example above, we created a variable or a 'bucket' called `x`. Inside we
+put a value, `3`.
+
+Let's create another variable called `y` and give it a value of 5. 
+
+```{r}
+y <- 5
+```
+
+When assigning a value to an variable, R does not print anything to the console.
+You can force to print the value by using parentheses or by typing the variable
+name.
+
+```{r}
+y
+```
+
+You can also view information on the variable by looking in your `Environment`
+window in the upper right-hand corner of the RStudio interface.
+
+Now we can reference these buckets by name to perform mathematical operations on
+the values contained within. What do you get in the console for the following
+operation:
+
+```{r}
+x + y
+```
+
+Try assigning the results of this operation to another variable called `number`. 
+
+```{r}
+number <- x + y
+```
+
+**Exercises**
+
+1. Try changing the value of the variable `x` to 5. What happens to `number`?
+2. Now try changing the value of variable `y` to contain the value 10. What do
+you need to do, to update the variable `number`?
+
+---
+# Data Types
+
+Variables can contain values of specific types within R.
+
+|  Data Type |        Examples        |
+|-----------:|:----------------------:|
+|   Numeric: |     1, 1.5, 20, pi     |
+| Character: | “anytext”, “5”, “TRUE” |
+|   Integer: |     2L, 500L, -17L     |
+|   Logical: |    TRUE, FALSE, T, F   |
+
+# Data Structures
+
+Variables can store more than just a single value, they can store a multitude of
+different data structures. These include, but are not limited to, vectors (c),
+matrices (matrix), data frames (data.frame) and lists (list).
+
+## Vectors
+
+A vector is the most common and basic data structure in R, and is pretty much
+the workhorse of R. It’s a collection of values. *All values in a vector must be
+of the same data type**. If you try to create a vector with more than a single
+data type, R will try to coerce it into a single data type.
+
+```{r}
+glengths <- c(4.6, 3000, 50000)
+```
+
+**Exercises**
+
+Try to create the vector called *vector1* with the values 2, 5 and "elem1".
+
+```{r}
+vector1 <- c(2, 5, "myvector")
+```
+
+Create a vector called *vector2* with the values "one", "two" and "three".
+
+```{r}
+vector2 <- c("one", "two", "three")
+```
+
+Use the *combine (c())* function to combine the two recently created vectors.
+
+```{r}
+c(vector1, vector2)
+```
+
+## Matrix
+
+A matrix in R is a collection of vectors of same length and identical datatype.
+Vectors can be combined as columns in the matrix or by row, to create a
+2-dimensional structure.
+
+```{r}
+m <- matrix(c(vector1, vector2), ncol = 2)
+```
+
+## Dataframe
+
+A data.frame is the de facto data structure for most tabular data and what we
+use for statistics and plotting. A data.frame is similar to a matrix in that
+it’s a collection of vectors of the same length and each vector represents a
+column. However, in a dataframe each vector can be of a different data type
+(e.g., characters, integers, factors).
+
+```{r}
+df <- data.frame(col1 = vector1,
+                 col2 = vector2,
+                 col3 = c(2, 4, 8))
+```
+
+## Lists
+
+If you have variables of different data structures you wish to combine, you can
+put all of those into one list object by using the list() function and placing
+all the items you wish to combine within parentheses.
+
+```{r}
+list1 <- list(vector1, vector2, m, df)
+list1
+
+list1 <- list("vector1" = vector1,
+              "vector2" = vector2,
+              "matrix" = m,
+              "df" = df)
+list1
+```
+
+# Functions
+
+A key feature of R is functions. Functions are "self contained" modules of code
+that accomplish a specific task. Functions usually take in some sort of data
+structure (value, vector, dataframe etc.), process it, and return a result.
+
+The general usage for a function is the name of the function followed by
+parentheses:
+
+function_name(input)
+
+The input(s) are called arguments, which can include:
+
+The physical object (any data structure) on which the function carries out a
+task specifications that alter the way the function operates (e.g. options)
+
+Not all functions take arguments, for example:
+
+```{r}
+getwd()
+```
+
+However, most functions can take several arguments. If you don't specify a
+required argument when calling the function, you will either receive an error or
+the function will fall back on using a default.
+
+The defaults represent standard values that the author of the function specified
+as being "good enough in standard cases". An example would be what symbol to use
+in a plot. However, if you want something specific, simply change the argument
+yourself with a value of your choice.
+
+```{r}
+vector3 <- c(5, 10, 25)
+
+log2(vector3)
+
+vector3 * 4
+```
+
+## User defined functions
+
+One of the great strengths of R is the user's ability to add functions.
+Sometimes there is a small task (or series of tasks) you need done and you find
+yourself having to repeat it multiple times. In these types of situations, it
+can be helpful to create your own custom function. The structure of a function
+is given below:
+
+name_of_function <- function(argument1, argument2) {
+    statements or code that does something
+    return(something)
+}
+
+First you give your function a name. Then you assign value to it, where the
+value is the function. When defining the function you will want to provide the
+list of arguments required (inputs and/or options to modify behaviour of the
+function), and wrapped between curly brackets place the tasks that are being
+executed on/using those arguments. The argument(s) can be any type of object
+(like a scalar, a matrix, a dataframe, a vector, a logical, etc), and it’s not
+necessary to define what it is in any way.
+
+```{r}
+square_it <- function(x) {
+    square <- x * x
+    return(square)
+}
+```
+
+```{r}
+square_it(4)
+```
+
+## Chip-Seq Pipeline
+
+```{r}
+library("ChIPpeakAnno")
+library("TxDb.Hsapiens.UCSC.hg19.knownGene")
+data(TSS.human.GRCh37)
+
+# The input of ChIPpeakAnno is a list of called peaks identified from ChIP-seq
+# experiments. The peaks are represented by GRanges in ChIPpeakAnno.
+bed <- system.file("extdata", "MACS_output.bed", package="ChIPpeakAnno")
+gr1 <- toGRanges(bed, format="BED", header=FALSE)
+
+gff <- system.file("extdata", "GFF_peaks.gff", package="ChIPpeakAnno")
+gr2 <- toGRanges(gff, format="GFF", header=FALSE, skip=3)
+
+# How many regions are in gr1 and gr2?
+# What is the genome version of TxDb.Hsapiens.UCSC.hg19.knownGene?
+# How many transcripts are in this database (TxDb.Hsapiens.UCSC.hg19.knownGene)?
+# EXTRA: How can we get the transcript regions?
+
+# Find and plot the overlap of the two ranges
+ol <- findOverlapsOfPeaks(gr1, gr2)
+makeVennDiagram(ol, fill=c("#009E73", "#F0E442"), # circle fill color
+                col=c("#D55E00", "#0072B2"), #circle border color
+                cat.col=c("#D55E00", "#0072B2"))
+
+# Which type of object is "ol"?
+# How many items does it have? List the items (hint: ol$)?
+
+## create annotation file from EnsDb or TxDb
+overlaps <- ol$peaklist[["gr1///gr2"]]
+
+overlaps.anno <- annotatePeakInBatch(overlaps, AnnotationData=TSS.human.GRCh37,
+                                    output="overlapping", maxgap=5000L)
+overlaps.anno <- addGeneIDs(overlaps.anno, "org.Hs.eg.db", "symbol")
+
+# Is the gene SAMD11 present in overlaps.anno?
+# HINT: Try the functions View() and as.data.frame() together
+
+# Once the peaks are annotated, the distribution of the distance to the nearest
+# feature such as the transcription start sites (TSS) can be plotted. The sample
+# code here plots the distribution of the aggregated peak scores and the number
+# of peaks around the TSS.
+binOverFeature(gr1, annotationData=TSS.human.GRCh37,
+               radius=5000, nbins=100, FUN=length, errFun = 0)
+
+# Where are the peaks centered around?
+
+# The distribution of the peaks over exon, intron, enhancer, proximal promoter,
+# 5’ UTR and 3’ UTR can be summarized in peak centric or nucleotide centric view
+# using the function assignChromosomeRegion.
+aCR<-assignChromosomeRegion(gr1, nucleotideLevel=FALSE,
+                           precedence=c("Promoters", "immediateDownstream",
+                                         "fiveUTRs", "threeUTRs",
+                                         "Exons", "Introns"),
+                           TxDb=TxDb.Hsapiens.UCSC.hg19.knownGene)
+aCR$percentage
+barplot(aCR$percentage)
+
+# In which region most of the peaks are located?
+
+# The percentages in the legend show the percentage of peaks in each category.
+genomicElementDistribution(gr1, 
+                           TxDb = TxDb.Hsapiens.UCSC.hg19.knownGene,
+                           promoterRegion=c(upstream=2000, downstream=500),
+                           geneDownstream=c(upstream=0, downstream=2000))
+
+# Perform GO analysis
+over <- getEnrichedGO(overlaps.anno, orgAnn="org.Hs.eg.db", condense=TRUE)
+enrichmentPlot(over)
+
+# Which is the most enriched biological process (bp)?
+```
+
+
+
+## DE pipeline
+
+```{r}
+# FOR HELP:
+#  Press f1 on function name
+#  ?function
+#  Type on help tab
+
+# 1. Load required libraries
+library("DESeq2")
+library("pheatmap")
+library("RColorBrewer")
+library("ggplot2")
+
+# 2. Get the working directory
+getwd()
+
+# 3. Get our files
+download.file("https://raw.githubusercontent.com/rlbc/lesson/main/GSE60949_counts_1000.csv",
+                      destfile = "GSE60949_counts_1000.csv")
+download.file("https://raw.githubusercontent.com/rlbc/lesson/main/GSE60949-metadata.csv",
+              destfile = "GSE60949-metadata.csv")
+
+myCts <- "GSE60949_counts_1000.csv"
+myMeta <- "GSE60949-metadata.csv"
+
+# 4. Read the CSV file, taking the "row names" from "gene_symbol" column
+# CSV = comma separated file
+# We could read a tabular separated file (TSV) or other files with read.table()
+cts <- read.csv(myCts, row.names = "gene_symbol")
+
+# We can inspect the file
+head(cts)
+
+# 5. Let's plot a simple boxplot to look at the data distribution
+boxplot(cts)
+
+# Can we see clearly the results?
+# We can make it better by transforming the data with log2
+
+boxplot(log2(cts + 1))
+
+# Why adding 1?
+# Try without it (just log2(cts))
+
+# 6. Read the metadata
+coldata <- read.csv(myMeta, row.names=1)
+
+# We can also inspect it
+coldata
+
+# 7. Generate a DESeqDataSet object
+# A DESeqDataSet object must have an associated design formula. The design
+# formula expresses the variables which will be used in modeling. The formula
+# should be a tilde (~) followed by the variables with plus signs between them
+# (it will be coerced into an formula if it is not already). The design can be
+# changed later, however then all differential analysis steps should be
+# repeated, as the design formula is used to estimate the dispersions and to
+# estimate the log2 fold changes of the model.
+dds <- DESeqDataSetFromMatrix(countData = cts,
+                              colData = coldata,
+                              design = ~ condition)
+
+# Make sure we have normal - tumor
+dds$condition <- relevel(dds$condition, ref = "normal")
+
+# 8. Run DESeq
+#  1. The estimation of size factors, controlling for differences in the counts
+#  due varying sequencing depth of the samples. 
+
+#  2. The estimation of dispersion values. The dispersion parameter captures how
+#  much the counts for the samples will vary around an expected value. Note that
+#  the expected value takes into consideration the sequencing depth and
+#  differences that can be attributed to variables in the design formula.
+
+#  3. Fitting a final generalized linear model using the size factors and
+#  dispersion values estimated above, which gives estimates of the log fold
+#  changes.
+dds <- DESeq(dds)
+
+# 9. Get normalized counts
+# This function calculates a variance stabilizing transformation (VST) and then
+# transforms the count data (normalized by division by the size factors or
+# normalization factors). The transformation also normalizes with respect to
+# library size. These transformations are useful when checking for outliers or
+# as input for machine learning techniques such as clustering or linear
+# discriminant analysis.
+vsd <- varianceStabilizingTransformation(dds, blind = TRUE)
+
+# We also can get the normalized counts, by library size
+normalized_counts <- counts(dds, normalized = TRUE)
+
+# Plot and compare the two values
+boxplot(log2(normalized_counts + 1))
+boxplot(assay(vsd))
+
+# 10. Assess the dataset
+# A useful first step in an RNA-seq analysis is often to assess overall
+# similarity between samples: Which samples are similar to each other, which are
+# different? Does this fit to the expectation from the experiment’s design? We
+# use the R function dist to calculate the Euclidean distance between samples.
+sampleDists <- dist(t(assay(vsd)))
+
+sampleDistMatrix <- as.matrix(sampleDists)
+rownames(sampleDistMatrix) <- paste(vsd$condition, vsd$Sample, sep="-")
+colnames(sampleDistMatrix) <- NULL
+colors <- colorRampPalette( rev(brewer.pal(9, "Blues")) )(255)
+pheatmap(sampleDistMatrix,
+         clustering_distance_rows=sampleDists,
+         clustering_distance_cols=sampleDists,
+         col=colors)
+
+# Another way to visualize sample-to-sample distances is a principal components
+# analysis (PCA). In this ordination method, the data points (here, the samples)
+# are projected onto the 2D plane such that they spread out in the two
+# directions that capture the most of the variance across samples.
+plotPCA(vsd, intgroup=c("condition", "Sample"))
+
+# A common method of visualizing gene expression data is to display it as a
+# heatmap (Figure 12). The heatmap may also be combined with clustering methods
+# which group genes and/or samples together based on the similarity of their
+# gene expression pattern. This can be useful for identifying genes that are
+# commonly regulated, or biological signatures associated with a particular
+# condition
+select <- order(rowVars(counts(dds,normalized=TRUE)),
+                decreasing=TRUE)[1:20]
+df <- as.data.frame(colData(dds)[,c("condition", "Sample")])
+
+pheatmap(assay(vsd)[select,], cluster_rows=FALSE, show_rownames=FALSE,
+         cluster_cols=TRUE, annotation_col=df)
+
+# 11. Get the differential expressed genes
+# Calling results without any arguments will extract the estimated log2 fold
+# changes and p values for the design formula.
+res <- results(dds)
+
+# Results columns
+# The first column, baseMean, is a just the average of the normalized count
+# values, dividing by size factors, taken over all samples in the DESeqDataSet.
+
+# The column log2FoldChange is the effect size estimate. It tells us how much
+# the gene’s expression seems to have changed due to treatment. This value is
+# reported on a logarithmic scale to base 2: for example, a log2 fold change of
+# 1.5 means that the gene’s expression is increased by a multiplicative factor
+# of 21.5 ≈ 2.82.
+
+# The column lfcSE estimate has an uncertainty associated with log2FoldChange,
+# or the standard error estimate for the log2 fold change estimate.
+
+# DESeq2 performs for each gene a hypothesis test to see whether evidence is
+# sufficient to decide against the null hypothesis that there is zero effect of
+# the treatment on the gene and that the observed difference between treatment
+# and control was merely caused by experimental variability. As usual in
+# statistics, the result of this test is reported as a p value, and it is found
+# in the column pvalue. A p value indicates the probability that a fold change
+# as strong as the observed one, or even stronger, would be seen under the
+# situation described by the null hypothesis. The adjusted p values satisfy the
+# property that thresholding at a specific value defines a set of tests (one for
+# each gene) with a bounded false discovery rate (FDR), typically a useful
+# metric for assessing which genes to target for further analysis.
+
+# We can summarize the results of the differential expression
+summary(res)
+
+# And order the results table by padj
+resOrdered <- res[order(res$padj),]
+
+# 12. Visualize and save the results
+# Plotting counts for single genes
+plotCounts(dds, gene="LOX", intgroup="condition")
+plotCounts(dds, gene="GFRA2", intgroup="condition")
+
+# A volcano plot is a type of scatterplot that shows statistical significance (P
+# value) versus magnitude of change (fold change). It enables quick visual
+# identification of genes with large fold changes that are also statistically
+# significant. These may be the most biologically significant genes.
+ggplot(as.data.frame(res), aes(x = log2FoldChange, y = -log10(padj))) +
+    geom_point(aes(colour = padj < 0.05)) +
+    ggtitle("A673 shGFP vs shEWS-FLI1") +
+    xlab("log2 fold change") + 
+    ylab("-log10 adjusted p-value") +
+    theme(plot.title = element_text(size = rel(1.5), hjust = 0.5),
+          axis.title = element_text(size = rel(1.25)))
+
+# Write data to file
+write.csv(as.data.frame(resOrdered), 
+          file="condition_treated_results.csv")
+```
+
